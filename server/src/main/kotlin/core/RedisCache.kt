@@ -68,6 +68,10 @@ class RedisCache private constructor(private val commands: DragonflyCommands<Str
         suspend fun connect(url: RedisURI): RedisCache {
             val client = RedisClient.create()
             val redis = client.connectDragonfly(url, codec)
+            val redisPassword = Config.REDIS_PASSWORD
+            if (redisPassword != null) {
+                redis.auth(redisPassword)
+            }
             return RedisCache(redis)
         }
     }

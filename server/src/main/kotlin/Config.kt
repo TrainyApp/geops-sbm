@@ -17,4 +17,5 @@ object Config : Config() {
     val CACHE_LIFETIME by getEnv(5.minutes, Duration::parse)
     val RUN_CRAWLER by getEnv(true, String::toBooleanStrict)
     val REDIS_URL by getEnv(RedisURI.create("redis://localhost:6379/0"), RedisURI::create)
+    val REDIS_PASSWORD by getEnv().optional()
 }
