@@ -1,0 +1,133 @@
+openapi: "3.1.0"
+info:
+  title: "geops_munich_gradle API"
+  description: "geops_munich_gradle API"
+  version: "1.0.0"
+servers:
+  - url: "https://sbm.positions.trainy.app"
+paths:
+  /{version}/vehicle-positions:
+    get:
+      description: ""
+      parameters:
+        - name: "version"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            enum:
+              - "V1"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/VehiclePosition"
+  /{version}/vehicle-positions/{trainId}:
+    get:
+      description: ""
+      parameters:
+        - name: "version"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            enum:
+              - "V1"
+        - name: "trainId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "404":
+          description: "Not Found"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/VehiclePosition"
+components:
+  schemas:
+    Vehicle:
+      type: "object"
+      properties:
+        uic:
+          type: "string"
+          nullable: true
+        trainId:
+          type: "string"
+        vehicleNumber:
+          type: "string"
+          nullable: true
+      required:
+        - "trainId"
+    LineColor:
+      type: "object"
+      properties:
+        color:
+          type: "integer"
+          format: "int32"
+        textColor:
+          type: "integer"
+          format: "int32"
+        stroke:
+          type: "integer"
+          format: "int32"
+      required:
+        - "color"
+        - "textColor"
+        - "stroke"
+    Journey:
+      type: "object"
+      properties:
+        trainNumber:
+          type: "integer"
+          format: "int32"
+        line:
+          type: "integer"
+          format: "int32"
+        lineName:
+          type: "string"
+        color:
+          $ref: "#/components/schemas/LineColor"
+      required:
+        - "trainNumber"
+        - "line"
+        - "lineName"
+        - "color"
+    Coordinate:
+      type: "object"
+      properties:
+        latitude:
+          type: "number"
+          format: "double"
+        longitude:
+          type: "number"
+          format: "double"
+      required:
+        - "latitude"
+        - "longitude"
+    VehiclePosition:
+      type: "object"
+      properties:
+        status:
+          type: "string"
+          enum:
+            - "REALTIME"
+            - "PREDICTED"
+        vehicle:
+          $ref: "#/components/schemas/Vehicle"
+        journey:
+          $ref: "#/components/schemas/Journey"
+        position:
+          $ref: "#/components/schemas/Coordinate"
+      required:
+        - "status"
+        - "vehicle"
+        - "journey"
+        - "position"

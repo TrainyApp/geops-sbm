@@ -1,0 +1,15 @@
+<configuration>
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                %boldGreen(%d{yyyy-MM-dd}) %boldYellow(%d{HH:mm:ss}) %gray(|) %cyan(%thread) %gray(|) %highlight(%5level) %gray(|) %boldMagenta(%40.40logger{40}) %gray(|) %msg%n
+            </pattern>
+            <withJansi>true</withJansi>
+        </encoder>
+    </appender>
+    <root level="trace">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+    <logger name="io.netty" level="INFO"/>
+</configuration>
