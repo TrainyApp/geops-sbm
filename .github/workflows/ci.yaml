@@ -18,7 +18,7 @@ jobs:
           distribution: temurin
           java-version: 24
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew check
+      - run: ./gradlew client:jsTest client:jvmTest client:macosArm64Test
       - name: Publish to Maven
         if: github.ref_type == 'tag'
         env:
