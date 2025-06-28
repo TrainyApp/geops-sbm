@@ -8,14 +8,12 @@ import io.ktor.client.plugins.resources.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import io.lettuce.core.RedisURI
-import kotlinx.coroutines.delay
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
-import kotlin.time.Duration.Companion.seconds
 
 private val LOG = KotlinLogging.logger { }
 
@@ -33,8 +31,6 @@ class GeopsTest {
             configure()
         }
 
-        LOG.info { "Waiting 5 seconds to receive items" }
-        delay(5.seconds)
 
         val res = client.get(Route.VehiclePositions())
         assertEquals(HttpStatusCode.OK, res.status)

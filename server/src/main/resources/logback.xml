@@ -12,4 +12,7 @@
         <appender-ref ref="CONSOLE"/>
     </root>
     <logger name="io.netty" level="INFO"/>
+    <logger name="com.github.dockerjava" level="INFO"/>
+    <logger name="io.lettuce" level="INFO"/>
+    <logger name="org.testcontainers" level="INFO"/>
 </configuration>
