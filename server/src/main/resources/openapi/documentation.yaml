@@ -4,7 +4,7 @@ info:
   description: "geops_munich_gradle API"
   version: "1.0.0"
 servers:
-  - url: "https://sbm.positions.trainy.app"
+  - url: "https://sbm-positions.trainy.app"
 paths:
   /{version}/vehicle-positions:
     get:

@@ -6,6 +6,6 @@ import io.ktor.client.engine.*
 internal actual val defaultHttpClientEngineFactory: HttpClientEngineFactory<*> = Cronet.config {
     options {
         enableQuic(true)
-        addQuicHint("sbm.positions.trainy.app", 443, 80)
+        addQuicHint(defaultHost, 443, 80)
     }
 }

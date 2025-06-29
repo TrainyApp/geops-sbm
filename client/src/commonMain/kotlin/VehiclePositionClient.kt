@@ -7,6 +7,7 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.*
 import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.expectSuccess
 import io.ktor.client.plugins.resources.*
 import io.ktor.http.*
@@ -14,6 +15,9 @@ import io.ktor.serialization.kotlinx.protobuf.*
 import kotlin.js.JsName
 
 internal expect val defaultHttpClientEngineFactory: HttpClientEngineFactory<*>
+
+internal const val defaultHost = "sbm-positions.trainy.app"
+internal const val defaultUrl = "https://$defaultHost"
 
 /**
  * @suppress
@@ -27,6 +31,9 @@ fun HttpClientConfig<*>.configure() {
     expectSuccess = true
 
     install(Resources)
+    defaultRequest {
+        url.takeFrom(defaultUrl)
+    }
 }
 
 /**
