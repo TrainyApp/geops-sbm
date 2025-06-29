@@ -15,6 +15,7 @@ import io.ktor.websocket.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -105,7 +106,12 @@ class GeopsClient {
 
         for (message in currentSession.incoming) {
             LOG.trace { "Received frame: $message" }
-            val event = client.plugin(WebSockets).contentConverter!!.deserialize<GeopsMessage>(message)
+            val event = try {
+                client.plugin(WebSockets).contentConverter!!.deserialize<GeopsMessage>(message)
+            } catch (e: SerializationException) {
+                LOG.error(e) { "Failed to deserialize message" }
+                return
+            }
             LOG.debug { "Received event: $event" }
             _events.emit(event)
             handleEvent(event)
