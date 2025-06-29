@@ -4,7 +4,7 @@ plugins {
 
 allprojects {
     group = "app.trainy.geops"
-    version = "1.0.2"
+    version = "1.0.3"
 }
 
 dependencies {
