@@ -27,6 +27,7 @@ jobs:
           java-version: 23
           distribution: temurin
       - uses: gradle/actions/setup-gradle@v4
+      - run: docker pull docker.dragonflydb.io/dragonflydb/dragonfly
       - run: ./gradlew server:check --stacktrace
       - run: ./gradlew server:installDist
       - name: Setup Docker buildx
