@@ -2,7 +2,9 @@ package app.trainy.geops.server.core
 
 import app.trainy.geops.server.Config
 import app.trainy.geops.server.geops.Buffer
+import app.trainy.geops.server.geops.DeletedVehicles
 import app.trainy.geops.server.geops.GeopsClient
+import app.trainy.geops.server.geops.GeopsMessage
 import app.trainy.geops.server.geops.Trajectory
 import app.trainy.geops.server.geops.WebsocketMessage
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -36,7 +38,16 @@ class PositionHandler(private val redisCache: RedisCache, private val client: Ge
 
     }
 
-    suspend fun handleEvent(event: Buffer) {
+    suspend fun handleEvent(event: GeopsMessage) {
+        when (event) {
+            is Trajectory -> handleEvent(event)
+            is Buffer -> handleEvent(event)
+            is DeletedVehicles -> handleEvent(event)
+            else -> LOG.warn { "Received unknown event: $event" }
+        }
+    }
+
+    private suspend fun handleEvent(event: Buffer) {
         val trajectories = event.content
             .asSequence()
             .filterIsInstance<Trajectory>()
@@ -49,7 +60,7 @@ class PositionHandler(private val redisCache: RedisCache, private val client: Ge
         redisCache.insertPositions(trajectories, Config.CACHE_LIFETIME)
     }
 
-    suspend fun handleEvent(event: Trajectory) {
+    private suspend fun handleEvent(event: Trajectory) {
         LOG.debug { "Handling event: $event" }
         val position = event.toVehiclePosition() ?: return
         LOG.debug { "Received position: $position" }
