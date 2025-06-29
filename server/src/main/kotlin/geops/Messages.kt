@@ -60,6 +60,7 @@ data class Trajectory(
 @Serializable
 data class DeletedVehicles(
     override val timestamp: Timestamp,
+    @SerialName("client_reference")
     override val clientReference: String,
     override val content: String
 ) : GeopsMessage
