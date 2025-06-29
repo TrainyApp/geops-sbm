@@ -1,5 +1,6 @@
 package app.trainy.geops.server.routes
 
+import app.trainy.geops.server.Config
 import app.trainy.geops.server.core.RedisCache
 import app.trainy.geops.server.geops.GeopsClient
 import io.ktor.http.*
@@ -12,7 +13,7 @@ fun Route.health() {
         val geopsClient: GeopsClient by application.dependencies
         val redisCache: RedisCache by application.dependencies
 
-        if (geopsClient.isConnected && redisCache.isActive) {
+        if ((geopsClient.isConnected || !Config.RUN_CRAWLER) && redisCache.isActive) {
             call.respond(HttpStatusCode.NoContent)
         } else {
             call.respond(HttpStatusCode.ServiceUnavailable)
