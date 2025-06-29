@@ -1,6 +1,7 @@
 package app.trainy.geops.server.geops
 
 import app.trainy.geops.server.Config
+import app.trainy.geops.server.core.retry.newRetry
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.client.*
 import io.ktor.client.plugins.*
@@ -28,6 +29,7 @@ private val pingInterval = 10.seconds
 private val LOG = KotlinLogging.logger { }
 
 class GeopsClient {
+    private val retry = newRetry()
     private val _events = MutableSharedFlow<GeopsMessage>(
         extraBufferCapacity = Channel.UNLIMITED
     )
@@ -71,7 +73,16 @@ class GeopsClient {
         )
     }
 
-    suspend fun connect() {
+    suspend fun connect() = connect(isRetry = false)
+
+    private suspend fun connect(isRetry: Boolean = false) {
+        if (isRetry) {
+            if (retry.hasNext) {
+                retry.retry()
+            } else {
+                throw IllegalStateException("Max retries exceeded")
+            }
+        }
         session?.close()
         val currentSession = client.webSocketSession {
             url {
@@ -80,6 +91,7 @@ class GeopsClient {
             }
         }
         LOG.info { "Connected to websocket" }
+        retry.reset()
         session = currentSession
 
         currentSession.launch(CoroutineName("GeopsClient-Pinger")) {
@@ -99,6 +111,7 @@ class GeopsClient {
             handleEvent(event)
         }
         LOG.info { "Lost connection to websocket" }
+        connect(isRetry = true)
     }
 
     suspend inline fun <reified T : GeopsMessage> waitFor(crossinline predicate: (T) -> Boolean = { true }) = events
