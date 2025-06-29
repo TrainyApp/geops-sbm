@@ -64,10 +64,9 @@ class GeopsClient {
         sendCommand(BufferCommand(100.milliseconds, 100))
         sendCommand(
             BBoxCommand(
-                469157, 88202, 4343401, 3357096,
-                5,
+                1230173, 6057470, 1347123, 6201936,
+                10,
                 "sbm",
-                "schematic"
             )
         )
     }

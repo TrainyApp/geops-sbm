@@ -4,16 +4,22 @@ import app.trainy.geops.server.geops.Trajectory
 import app.trainy.geops.server.types.TimestampSerializer
 import app.trainy.geops.types.*
 import io.github.dellisd.spatialk.geojson.Feature
+import io.github.dellisd.spatialk.geojson.LineString
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
+import kotlin.math.PI
+import kotlin.math.atan
+import kotlin.math.sinh
 
 private data class PropertyKey<T : Any>(val name: String, val serializer: KSerializer<T>)
 
 private inline fun <reified T : Any> PropertyKey(name: String): PropertyKey<T> = PropertyKey(name, serializer<T>())
+
+private const val R = 6378137.0
 
 @Serializable
 private data class Line(
@@ -54,7 +60,7 @@ fun Trajectory.toVehiclePosition() = content.toVehiclePosition()
 
 private fun Feature.toVehiclePosition(): VehiclePosition? {
     if (!this[Properties.hasJourney]) return null
-    val position = toPosition() ?: return null
+    val position = toPosition() ?: toEstimatedPosition() ?: return null
 
     return VehiclePosition(
         toStatus(),
@@ -63,6 +69,15 @@ private fun Feature.toVehiclePosition(): VehiclePosition? {
         toJourney(),
         position
     )
+}
+
+private fun Feature.toEstimatedPosition(): Coordinate? {
+    val (x, y) = (geometry as? LineString)?.coordinates?.firstOrNull() ?: return null
+
+    val lon = x / R * (180.0 / PI)
+    val lat = Math.toDegrees(atan(sinh(y / R)))
+
+    return Coordinate(lat, lon)
 }
 
 private fun Feature.toStatus() =
