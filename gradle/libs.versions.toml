@@ -15,6 +15,7 @@ ktor-server-cors = { group = "io.ktor", name = "ktor-server-cors", version.ref =
 ktor-server-resources = { group = "io.ktor", name = "ktor-server-resources", version.ref = "ktor" }
 ktor-server-test-host = { group = "io.ktor", name = "ktor-server-test-host", version.ref = "ktor" }
 ktor-server-di = { group = "io.ktor", name = "ktor-server-di", version.ref = "ktor" }
+ktor-server-swagger = { group = "io.ktor", name = "ktor-server-swagger", version.ref = "ktor" }
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-client-java = { group = "io.ktor", name = "ktor-client-java", version.ref = "ktor" }
 ktor-client-js = { group = "io.ktor", name = "ktor-client-js", version.ref = "ktor" }
@@ -37,7 +38,6 @@ spatialk-geojson = { group = "app.trainy.spatial-k", name = "geojson", version =
 
 envconf = { group = "dev.schlaubi", name = "stdx-envconf", version = "1.3.0" }
 lettuce-core = { group = "io.lettuce", name = "lettuce-core", version = "6.7.1.RELEASE" }
-netty-resolver-dns = { group = "io.netty", name = "netty-resolver-dns", version = "4.1.1.Final" }
 
 jansi = { group = "org.fusesource.jansi", name = "jansi", version = "2.4.2" }
 logback = { group = "ch.qos.logback", name = "logback-classic", version = "1.5.18" }

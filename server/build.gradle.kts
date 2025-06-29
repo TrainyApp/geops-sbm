@@ -16,6 +16,7 @@ dependencies {
     implementation(libs.ktor.server.cors)
     implementation(libs.ktor.server.resources)
     implementation(libs.ktor.server.di)
+    implementation(libs.ktor.server.swagger)
     implementation(libs.ktor.client.java)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.client.resources)

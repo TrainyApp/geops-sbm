@@ -3,6 +3,7 @@ package app.trainy.geops.server
 import app.trainy.geops.server.core.PositionHandler
 import app.trainy.geops.server.core.RedisCache
 import app.trainy.geops.server.geops.GeopsClient
+import app.trainy.geops.server.routes.openAPI
 import app.trainy.geops.server.routes.vehiclePositions
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
@@ -62,5 +63,6 @@ internal suspend fun Application.module(redisUrl: RedisURI = Config.REDIS_URL) {
 
     routing {
         vehiclePositions()
+        openAPI()
     }
 }
