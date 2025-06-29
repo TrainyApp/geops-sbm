@@ -23,7 +23,7 @@ internal const val defaultUrl = "https://$defaultHost"
  * @suppress
  */
 @TrainyInternal
-fun HttpClientConfig<*>.configure() {
+fun HttpClientConfig<*>.configure(testMode: Boolean = false) = apply {
     install(ContentNegotiation) {
         protobuf()
     }
@@ -31,8 +31,10 @@ fun HttpClientConfig<*>.configure() {
     expectSuccess = true
 
     install(Resources)
-    defaultRequest {
-        url.takeFrom(defaultUrl)
+    if (!testMode) {
+        defaultRequest {
+            url.takeFrom(defaultUrl)
+        }
     }
 }
 

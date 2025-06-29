@@ -27,7 +27,7 @@ class GeopsTest {
     fun `test server`() = testApplication {
         application { module(redis.toRedisURI()) }
         val client = createClient {
-            configure()
+            configure(testMode = true)
         }
 
         startApplication()
