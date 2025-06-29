@@ -24,8 +24,8 @@ jobs:
         uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          java-version: 23
-          distribution: temurin
+          java-version: 24
+          distribution: oracle
       - uses: gradle/actions/setup-gradle@v4
       - run: docker pull docker.dragonflydb.io/dragonflydb/dragonfly
       - run: ./gradlew server:check --info
