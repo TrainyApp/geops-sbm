@@ -29,6 +29,7 @@ class DragonflyCommands<K : Any, V : Any>(
     private val delegate: RedisCoroutinesCommands<K, V>,
     private val codec: RedisCodec<K, V>,
 ) : RedisCoroutinesCommands<K, V> by delegate {
+    val isOpen get() = connection.isOpen
     suspend fun hsetex(
         key: K,
         expire: Duration,

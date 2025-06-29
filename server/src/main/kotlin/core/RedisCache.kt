@@ -26,6 +26,7 @@ private val codec = RedisCodec.of(StringCodec.UTF8, ByteArrayCodec.INSTANCE)
 
 class RedisCache private constructor(private val commands: DragonflyCommands<String, ByteArray>) {
     private val format = ProtoBuf
+    val isActive get() = commands.isOpen
 
     suspend fun insertPositions(position: List<VehiclePosition>, expire: Duration) {
         val results = commands.hsetex(
