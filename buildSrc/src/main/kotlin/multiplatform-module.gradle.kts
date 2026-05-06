@@ -4,13 +4,14 @@ import app.trainy.geops.build.androidSdkInt
 import app.trainy.geops.build.applyOptions
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
+import com.vanniktech.maven.publish.SourcesJar
 import org.jetbrains.dokka.gradle.workers.ProcessIsolation
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.konan.target.HostManager
 
 plugins {
     org.jetbrains.kotlin.multiplatform
-    com.android.library
+    com.android.kotlin.multiplatform.library
     com.vanniktech.maven.publish
     org.jetbrains.dokka
 }
@@ -22,8 +23,11 @@ kotlin {
         }
     }
 
-    androidTarget {
-        publishLibraryVariants("release")
+    androidLibrary {
+        namespace = "app.trainy.geops.${project.name}"
+        compileSdk { version = release(androidSdkInt) }
+
+        androidResources { enable = true }
     }
 
     js {
@@ -45,7 +49,6 @@ kotlin {
         linuxArm64()
     }
 
-    macosX64()
     macosArm64()
 
     mingwX64()
@@ -56,20 +59,13 @@ kotlin {
 
     tvosArm64()
     tvosSimulatorArm64()
-    tvosX64()
 
     watchosArm64()
     watchosSimulatorArm64()
-    watchosX64()
 
     compilerOptions {
         applyOptions()
     }
-}
-
-android {
-    namespace = "app.trainy.geops.${project.name}"
-    compileSdk = androidSdkInt
 }
 
 dokka {
@@ -94,7 +90,7 @@ dokka {
 mavenPublishing {
     configure(
         KotlinMultiplatform(
-            sourcesJar = true,
+            sourcesJar = SourcesJar.Sources(),
             javadocJar = JavadocJar.Dokka("dokkaGeneratePublicationHtml"),
             androidVariantsToPublish = listOf("release")
         )

@@ -20,7 +20,7 @@ import kotlin.time.Duration.Companion.seconds
 class GeopsTest {
 
     @Container
-    private val redis = GenericContainer("docker.dragonflydb.io/dragonflydb/dragonfly")
+    private val redis = GenericContainer("valkey/valkey")
         .withExposedPorts(6379)
 
     @Test

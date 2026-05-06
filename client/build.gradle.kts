@@ -61,7 +61,8 @@ kotlin {
 
         androidMain {
             dependencies {
-                implementation(libs.ktor.cronet)
+                compileOnly(libs.ktor.cronet)
+                compileOnly(libs.ktor.client.okhttp)
             }
         }
 
