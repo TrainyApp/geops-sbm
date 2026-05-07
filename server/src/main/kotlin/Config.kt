@@ -10,7 +10,7 @@ object Config : Config() {
     val HOST by getEnv("0.0.0.0")
     val PORT by getEnv(8080, String::toInt)
 
-    val GEOPS_KEY by this
+    val GEOPS_KEY by environment
 
     val LOG_LEVEL by getEnv(Level.INFO, Level::valueOf)
 
