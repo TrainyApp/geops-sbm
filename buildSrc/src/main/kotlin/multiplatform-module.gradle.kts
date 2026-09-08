@@ -1,6 +1,7 @@
 @file:OptIn(ExperimentalWasmDsl::class)
 
-import app.trainy.geops.build.androidSdkInt
+import app.trainy.geops.build.androidMinSdk
+import app.trainy.geops.build.androidTargetSdk
 import app.trainy.geops.build.applyOptions
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
@@ -23,9 +24,10 @@ kotlin {
         }
     }
 
-    androidLibrary {
+    android {
         namespace = "app.trainy.geops.${project.name}"
-        compileSdk { version = release(androidSdkInt) }
+        minSdk { version = release(androidMinSdk) }
+        compileSdk { version = release(androidTargetSdk) }
 
         androidResources { enable = true }
     }

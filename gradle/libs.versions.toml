@@ -1,7 +1,7 @@
 [versions]
-kotlin = "2.3.21"
-ktor = "3.4.3"
-serialization = "1.11.0"
+kotlin = "2.4.20"
+ktor = "3.5.2"
+serialization = "1.12.0-RC"
 coroutines = "1.10.2"
 testcontainers = "2.0.5"
 
@@ -38,18 +38,18 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 spatialk-geojson = { group = "app.trainy.spatial-k", name = "geojson", version = "0.5.0-SNAPSHOT" }
 
 envconf = { group = "dev.schlaubi", name = "stdx-envconf", version = "2.0.0" }
-lettuce-core = { group = "io.lettuce", name = "lettuce-core", version = "7.5.1.RELEASE" }
+lettuce-core = { group = "io.lettuce", name = "lettuce-core", version = "7.7.0.RELEASE" }
 
 jansi = { group = "org.fusesource.jansi", name = "jansi", version = "2.4.3" }
-logback = { group = "ch.qos.logback", name = "logback-classic", version = "1.5.32" }
-logging = { group = "io.github.oshai", name = "kotlin-logging", version = "8.0.02" }
+logback = { group = "ch.qos.logback", name = "logback-classic", version = "1.6.3" }
+logging = { group = "io.github.oshai", name = "kotlin-logging", version = "8.0.4" }
 
 testcontainers = { group = "org.testcontainers", name = "testcontainers", version.ref = "testcontainers" }
 testcontainers-junit-jupiter = { group = "org.testcontainers", name = "testcontainers-junit-jupiter", version.ref = "testcontainers" }
 
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
-android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version = "9.0.1" }
-maven-publish-plugin = { group = "com.vanniktech", name = "gradle-maven-publish-plugin", version = "0.36.0" }
+android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version = "9.4.0" }
+maven-publish-plugin = { group = "com.vanniktech", name = "gradle-maven-publish-plugin", version = "0.37.0" }
 dokka-gradle-plugin = { group = "org.jetbrains.dokka", name = "org.jetbrains.dokka.gradle.plugin", version = "2.2.0" }
 
 [plugins]
