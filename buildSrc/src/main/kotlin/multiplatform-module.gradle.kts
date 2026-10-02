@@ -30,6 +30,7 @@ kotlin {
         compileSdk { version = release(androidTargetSdk) }
 
         androidResources { enable = true }
+        withHostTest { }
     }
 
     js {

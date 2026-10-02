@@ -1,7 +1,7 @@
 package app.trainy.geops.server.geops
 
+import app.trainy.geops.server.core.TrainPosition
 import app.trainy.geops.server.types.Timestamp
-import io.github.dellisd.spatialk.geojson.Feature
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -53,7 +53,7 @@ data class Trajectory(
     override val timestamp: Timestamp,
     @SerialName("client_reference")
     override val clientReference: String,
-    override val content: Feature
+    override val content: TrainPosition
 ) : GeopsMessage
 
 @SerialName("deleted_vehicles")

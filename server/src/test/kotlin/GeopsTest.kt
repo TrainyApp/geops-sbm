@@ -8,6 +8,7 @@ import io.ktor.http.*
 import io.ktor.server.testing.*
 import io.lettuce.core.RedisURI
 import kotlinx.coroutines.delay
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
@@ -16,6 +17,11 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
 
+@EnabledIfEnvironmentVariable(
+    named = "GEOPS_KEY",
+    matches = ".*",
+    disabledReason = "GEOPS_KEY is required to run this test"
+)
 @Testcontainers
 class GeopsTest {
 

@@ -1,18 +1,9 @@
 package app.trainy.geops.server.core
 
 import app.trainy.geops.server.Config
-import app.trainy.geops.server.geops.Buffer
-import app.trainy.geops.server.geops.DeletedVehicles
-import app.trainy.geops.server.geops.GeopsClient
-import app.trainy.geops.server.geops.GeopsMessage
-import app.trainy.geops.server.geops.Trajectory
-import app.trainy.geops.server.geops.WebsocketMessage
+import app.trainy.geops.server.geops.*
 import io.github.oshai.kotlinlogging.KotlinLogging
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 private val LOG = KotlinLogging.logger { }
@@ -51,8 +42,7 @@ class PositionHandler(private val redisCache: RedisCache, private val client: Ge
         val trajectories = event.content
             .asSequence()
             .filterIsInstance<Trajectory>()
-            .map { it.toVehiclePosition() }
-            .filterNotNull()
+            .mapNotNull(Trajectory::toVehiclePosition)
             .toList()
 
         if (trajectories.isEmpty()) return
